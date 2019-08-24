@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app">
+
+        <div class="customers-bar">
+            <div class="nav">
+                <a href="#" v-for="category in categories" v-on:click="chooseCategory(category)">{{ category }}</a>
+            </div>
+            <div class="cart">
+               <a href="#" v-on:mouseEnter="showCart"> <img src="http://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Cart-icon.png" alt=""></a>
+                <div class="cart-count">{{ cart[0].amount }}</div>
+            </div>
+        </div>
+
+        <div class="cart-content" v-on:mouseLeave="hideCart">
+            <div class="cart-content-item" v-for="cartItem in cart[0].cartContent">
+                <div class="cart-content-image">
+                    <img v-bind:src="cartItem.image" :alt="cartItem.product" width="100px">
+                </div>
+                <div class="cart-content-info">
+                    <h3>{{ cartItem.product }}</h3>
+                    <p> {{ cartItem.description }}</p>
+                    <b>{{ cartItem.price }}</b>
+                    <br>
+                    <small>amount: {{ cartItem.amount }}</small>
+                    <ul v-for="detail in cartItem.details">
+                        <li> {{ detail }} </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="products">
+
+            <div class="product" v-for="item in items">
+                <div class="info">
+                    <h1>item: {{ item.product }}</h1>
+                    <p>description: {{ item.description }}</p>
+
+                    <b>price: {{ item.price }}</b>
+                    <i v-if="item.inStock" class="info-text available">This product is avaiable.</i>
+                    <i v-else class="info-text notAvailable">This product is not avaiable.</i>
+
+                    <h4 class="details-title">Details:</h4>
+                    <ul class="details">
+                        <li v-for="detail in item.details"> {{ detail }} </li>
+                    </ul>
+
+                    <a v-if="item.inStock" href="#" v-on:click="addToCart(item)" class="cart-btn">ADD TO CART</a>
+                    <a v-else href="#" class="cart-btn cart-btn-disabled">ADD TO CART</a>
+                    <input class="item-sum" value="1" type="number" placeholder="how many items do you want?">
+                </div>
+                <div class="image">
+                    <img v-bind:src="item.image" :alt="item.product" width="220px">
+                    <img v-if="item.onSale" class="sale" src="https://gnomes.co.nz/images/banner-sale.png" alt="sale">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="main.js"></script>
+</body>
+</html>
